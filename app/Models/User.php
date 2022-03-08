@@ -34,7 +34,17 @@ class User extends Authenticatable
 
     public function activate()
     {
-         $this->update(['activated_at' => now()]);
+        $this->update(['activated_at' => now()]);
+    }
+
+    public function inviteCodes()
+    {
+        return $this->hasMany(InviteCode::class);
+    }
+
+    public function reachedInviteCodeRequestLimit()
+    {
+        return $this->inviteCodes()->count() >= 3;
     }
 
     /**

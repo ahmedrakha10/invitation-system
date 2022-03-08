@@ -17,6 +17,13 @@ class InviteCode extends Model
         'approved_at' => 'datetime'
     ];
 
+    protected $attributes = [
+        'quantity'      => 5,
+        'quantity_used' => 0
+    ];
+
+
+
     public function hasAvailableQuantity()
     {
         return $this->quantity_used < $this->quantity;
@@ -24,6 +31,11 @@ class InviteCode extends Model
 
     public function hasExpired()
     {
-        return $this->expires_at?->lt(now());
+        return $this->expires_at ?->lt(now());
+    }
+
+    public function approved()
+    {
+        return !is_null($this->approved_at);
     }
 }
